@@ -8,7 +8,7 @@ public class LavasGenerator : MonoBehaviour
     public GameObject lavasPrefab;
     public Transform lavasSpawnPoint;
     public static int generatedLavasCount;
-    private GameObject currentLavas;
+    public GameObject currentLavas;
     public Transform arrivePoint;
     private bool canMove = false;
     public static bool lavasCanMove = true;
@@ -25,15 +25,13 @@ public class LavasGenerator : MonoBehaviour
     {
         if (currentLavas != null)
         {
-            generatedLavasCount = 0;
             StartCoroutine(Move());
         }
     }
     IEnumerator Move()
     {
         yield return new WaitForSeconds(.01f);
-
-        Debug.Log(lavasCanMove);
+        
         currentLavas.transform.position = Vector3.MoveTowards(currentLavas.transform.position, arrivePoint.position, 0.001f);
         if (currentLavas.transform.position != arrivePoint.position)
         {
