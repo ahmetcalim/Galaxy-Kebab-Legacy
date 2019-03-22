@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class IngredientItem : MonoBehaviour
 {
-    public bool isActive;
     public int ID;
-    public Text text;
     public GameLogic gLogic;
 
     private void OnEnable()

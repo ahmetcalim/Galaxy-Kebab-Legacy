@@ -8,7 +8,7 @@ public class IngredientEditor : Editor
     public SerializedProperty
         ingredients,
         gLogic,
-        ingredientAction,
+        ingredientItem,
         actionViewport
         ;
 
@@ -16,7 +16,7 @@ public class IngredientEditor : Editor
     {
         ingredients = serializedObject.FindProperty("ingredients");
         gLogic = serializedObject.FindProperty("gLogic");
-        ingredientAction = serializedObject.FindProperty("ingredientAction");
+        ingredientItem = serializedObject.FindProperty("ingredientItem");
         actionViewport = serializedObject.FindProperty("actionViewport");
     }
     public override void OnInspectorGUI()
@@ -24,7 +24,7 @@ public class IngredientEditor : Editor
         serializedObject.Update();
         EditorGUILayout.PropertyField(ingredients, true);
         EditorGUILayout.PropertyField(gLogic, true);
-        EditorGUILayout.PropertyField(ingredientAction, true);
+        EditorGUILayout.PropertyField(ingredientItem, true);
         EditorGUILayout.PropertyField(actionViewport, true);
         serializedObject.ApplyModifiedProperties();
         IngredientCreator customerCreate = (IngredientCreator)target;
