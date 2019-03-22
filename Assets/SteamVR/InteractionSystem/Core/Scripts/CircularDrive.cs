@@ -15,6 +15,7 @@ namespace Valve.VR.InteractionSystem
 	[RequireComponent( typeof( Interactable ) )]
 	public class CircularDrive : MonoBehaviour
 	{
+        public UnityEvent OnDrive;
 		public enum Axis_t
 		{
 			XAxis,
@@ -279,6 +280,8 @@ namespace Valve.VR.InteractionSystem
 
             if ( driving && isGrabEnding == false && hand.hoveringInteractable == this.interactable )
 			{
+                //Event
+               
 				ComputeAngle( hand );
 				UpdateAll();
 			}
@@ -414,7 +417,8 @@ namespace Valve.VR.InteractionSystem
 			if ( rotateGameObject )
 			{
 				transform.localRotation = start * Quaternion.AngleAxis( outAngle, localPlaneNormal );
-			}
+                OnDrive.Invoke();
+            }
 		}
 
 
