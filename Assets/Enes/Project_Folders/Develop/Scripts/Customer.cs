@@ -6,6 +6,7 @@ public class Customer
 {
     public string customerName;
     public double averageTasteRatingnValue;
+    public float impactFactor=1;
     public List<Taste> Tastes;
 
     public double CalculateAverageSatisfactionValue()
