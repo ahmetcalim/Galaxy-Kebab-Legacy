@@ -40,7 +40,9 @@ public class GameLogic : MonoBehaviour
     {
         if (isPlay)
         {
-            Debug.Log("current customer: "+ currentOrder.customer.customerName );
+            Debug.Log("Current customer: "+ currentOrder.customer.customerName );
+            Debug.Log("Order count: " + orders.Count);
+            Debug.Log("Customer index: " + customerIndex);
         }
     }
 
@@ -90,16 +92,16 @@ public class GameLogic : MonoBehaviour
 
     void SetCustomer()
     {
-        customerIndex++;
-        if (orders.Count==customerIndex+1)
+        if (orders.Count>customerIndex+1)
         {
             currentOrder = currentOrder.nextOrder;
             currentOrderPrefab = currentOrder.orderPrefab;
+            customerIndex++;
         }
         else
         {
             Debug.Log("Elinde sipariş yok.");
-            customerIndex--;
+            //customerIndex--;
         }
     }
     string percentage;
@@ -121,18 +123,28 @@ public class GameLogic : MonoBehaviour
             currentOrder.customer.CalculateAverageSatisfactionValue();
             if (currentOrder.customer.averageTasteRatingnValue > 0)
             {
-                percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];
-                kalan = int.Parse(percentage) % 10;
-                Debug.Log("percantage: "+percentage);
-                Debug.Log("kalan: "+kalan);
-                for (int i = 0; i < (int.Parse(percentage) - kalan) / 10; i++)
-                    Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
-
-                if (kalan != 0)
+                if (currentOrder.customer.averageTasteRatingnValue>=1)
                 {
-                    GameObject star1 = Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
-                    star1.GetComponent<Image>().fillAmount = (float)kalan / 10.0f;
+                    for (int i = 0; i < 10; i++)
+                        Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
                 }
+                else
+                {
+                    currentOrder.customer.averageTasteRatingnValue += 0.01f;
+                    percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];
+                    kalan = int.Parse(percentage) % 10;
+                    Debug.Log("percantage: " + percentage);
+                    Debug.Log("kalan: " + kalan);
+                    for (int i = 0; i < (int.Parse(percentage) - kalan) / 10; i++)
+                        Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
+
+                    if (kalan != 0)
+                    {
+                        GameObject star1 = Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
+                        star1.GetComponent<Image>().fillAmount = (float)kalan / 10.0f;
+                    }
+                }
+                
             }
             else
             {
@@ -144,7 +156,7 @@ public class GameLogic : MonoBehaviour
                 taste.tasteRating = 0;
                 taste.totalInputCount = 0;
             }
-            Debug.Log(currentOrder.customer.averageTasteRatingnValue);
+            Debug.Log("average: "+currentOrder.customer.averageTasteRatingnValue);
             currentOrder.isFinished = true;
             currentOrder.customer.averageTasteRatingnValue = 0;
         }        
