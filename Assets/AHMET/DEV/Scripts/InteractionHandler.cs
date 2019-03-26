@@ -32,15 +32,6 @@ public class InteractionHandler : MonoBehaviour
         else
         {
             IsShaking = false;
-            if (hand.currentAttachedObject != null)
-            {
-                if (hand.currentAttachedObject.GetComponent<SpiceContainerBehaviour>() != null)
-                {
-                    hand.currentAttachedObject.GetComponent<SpiceContainerBehaviour>().IsInHand = false;
-                    hand.currentAttachedObject.GetComponent<SpiceContainerBehaviour>().IsShaking = false;
-                }
-             
-            }
         }
     }
     private void Shake()
@@ -49,8 +40,7 @@ public class InteractionHandler : MonoBehaviour
         {
             if (hand.currentAttachedObject.GetComponent<SpiceContainerBehaviour>() != null)
             {
-                hand.currentAttachedObject.GetComponent<SpiceContainerBehaviour>().IsInHand = true;
-                hand.currentAttachedObject.GetComponent<SpiceContainerBehaviour>().IsShaking = true;
+                hand.currentAttachedObject.GetComponent<SpiceContainerBehaviour>().Add();
             }
         
             hand.hapticAction.Execute(3f, 3f, 300f, 1f, handType);

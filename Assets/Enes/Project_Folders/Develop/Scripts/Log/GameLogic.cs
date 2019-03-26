@@ -32,7 +32,9 @@ public class GameLogic : MonoBehaviour
     }
     public void EndGame()
     {
+        FinishOrder();
         isPlay = false;
+        Popularity.SetGlobalPopularity();
         gOver.SetActive(true);
     }
 
@@ -41,8 +43,6 @@ public class GameLogic : MonoBehaviour
         if (isPlay)
         {
             Debug.Log("Current customer: "+ currentOrder.customer.customerName );
-            Debug.Log("Order count: " + orders.Count);
-            Debug.Log("Customer index: " + customerIndex);
         }
     }
 
@@ -51,7 +51,7 @@ public class GameLogic : MonoBehaviour
 
         if (isPlay)
         {
-            if (playingTime < 300)
+            if (playingTime < 90)
             {
                 CreateOrder(customers[Random.Range(0, customers.Count)]);
                 playingTime += interval;
@@ -101,7 +101,6 @@ public class GameLogic : MonoBehaviour
         else
         {
             Debug.Log("Elinde sipariş yok.");
-            //customerIndex--;
         }
     }
     string percentage;
@@ -133,8 +132,6 @@ public class GameLogic : MonoBehaviour
                     currentOrder.customer.averageTasteRatingnValue += 0.01f;
                     percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];
                     kalan = int.Parse(percentage) % 10;
-                    Debug.Log("percantage: " + percentage);
-                    Debug.Log("kalan: " + kalan);
                     for (int i = 0; i < (int.Parse(percentage) - kalan) / 10; i++)
                         Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
 
@@ -158,6 +155,7 @@ public class GameLogic : MonoBehaviour
             }
             Debug.Log("average: "+currentOrder.customer.averageTasteRatingnValue);
             currentOrder.isFinished = true;
+            Popularity.CalculateDailyPopularity(currentOrder.customer.averageTasteRatingnValue*currentOrder.customer.impactFactor);
             currentOrder.customer.averageTasteRatingnValue = 0;
         }        
         SetCustomer();
