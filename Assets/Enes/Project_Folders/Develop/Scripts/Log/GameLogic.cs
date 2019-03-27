@@ -127,11 +127,14 @@ public class GameLogic : MonoBehaviour
                 }
                 else
                 {
-                    currentOrder.customer.averageTasteRatingnValue += 0.01f;
-                    percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];
+                    percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];                   
                     kalan = int.Parse(percentage) % 10;
                     Debug.Log("percentage: " + percentage);
                     Debug.Log("kalan: "+kalan);
+                    if (percentage.Length == 1)
+                    {
+                        percentage += 0;
+                    }
                     Debug.Log("tam yıldız sayısı"+ (int.Parse(percentage) - kalan));
                     for (int i = 0; i < (int.Parse(percentage) - kalan) / 10; i++)
                         Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
