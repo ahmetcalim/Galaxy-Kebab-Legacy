@@ -14,7 +14,7 @@ public class DonerBehaviour : MonoBehaviour
         {
 
             endPoint.localPosition = new Vector3(endPoint.localPosition.x, endPoint.localPosition.y, DonerKnifeBehaviour.velocity);
-            transform.localScale = new Vector3(transform.localScale.x, (maxScaleX - DonerKnifeBehaviour.distanceFromDoner) * 7f, transform.localScale.z);
+            transform.localScale = new Vector3(transform.localScale.x, (maxScaleX - DonerKnifeBehaviour.distanceFromDoner) * 2f, transform.localScale.z);
         }
         else
         {
@@ -26,7 +26,10 @@ public class DonerBehaviour : MonoBehaviour
                 gameObject.AddComponent<Rigidbody>();
                 gameObject.AddComponent<MeshCollider>();
                 gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+
                 gameObject.GetComponent<MeshCollider>().convex = true;
+                gameObject.GetComponent<MeshCollider>().sharedMesh = GetComponent<SkinnedMeshRenderer>().sharedMesh;
+             
             }
         }
     }

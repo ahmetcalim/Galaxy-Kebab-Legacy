@@ -19,7 +19,7 @@ public class GameLogic : MonoBehaviour
     bool isPlay;
     public static int playingTime = 0;
     public static int interval = 20;
-    public GameObject gOver;
+
     List<Order> orders=new List<Order>();
 
     public void StartGame()
@@ -36,7 +36,7 @@ public class GameLogic : MonoBehaviour
         FinishOrder();
         isPlay = false;
         Popularity.SetGlobalPopularity();
-        gOver.SetActive(true);
+        
     }
 
 
