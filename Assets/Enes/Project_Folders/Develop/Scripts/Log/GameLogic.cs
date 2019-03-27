@@ -11,13 +11,14 @@ public class GameLogic : MonoBehaviour
     public List<Ingredient> ingredients;
     public Transform viewport;
     public OrderItem oItem;
+    public OrderControl oControl;
     Order currentOrder;
     GameObject currentOrderPrefab;
     public GameObject star;
     Taste result;
     bool isPlay;
     public static int playingTime = 0;
-    public static int interval = 30;
+    public static int interval = 20;
     public GameObject gOver;
     List<Order> orders=new List<Order>();
 
@@ -42,7 +43,7 @@ public class GameLogic : MonoBehaviour
     {
         if (isPlay)
         {
-            Debug.Log("Current customer: "+ currentOrder.customer.customerName );
+            Debug.Log("Current customer: "+ currentOrder.customer.customerName );         
         }
     }
 
@@ -51,7 +52,7 @@ public class GameLogic : MonoBehaviour
 
         if (isPlay)
         {
-            if (playingTime < 90)
+            if (playingTime < 300)
             {
                 CreateOrder(customers[Random.Range(0, customers.Count)]);
                 playingTime += interval;
@@ -82,6 +83,8 @@ public class GameLogic : MonoBehaviour
         {
             currentOrder = orders[0];
             currentOrderPrefab = currentOrder.orderPrefab;
+            currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.yellow);
+            oControl.SetValues(currentOrder.customer, currentOrder.customer.Tastes);
         }
         else
         {
@@ -96,6 +99,8 @@ public class GameLogic : MonoBehaviour
         {
             currentOrder = currentOrder.nextOrder;
             currentOrderPrefab = currentOrder.orderPrefab;
+            currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.yellow);
+            oControl.SetValues(currentOrder.customer, currentOrder.customer.Tastes);
             customerIndex++;
         }
         else
@@ -132,6 +137,7 @@ public class GameLogic : MonoBehaviour
                     currentOrder.customer.averageTasteRatingnValue += 0.01f;
                     percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];
                     kalan = int.Parse(percentage) % 10;
+                    Debug.Log("kalan: "+kalan);
                     for (int i = 0; i < (int.Parse(percentage) - kalan) / 10; i++)
                         Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
 
@@ -141,11 +147,13 @@ public class GameLogic : MonoBehaviour
                         star1.GetComponent<Image>().fillAmount = (float)kalan / 10.0f;
                     }
                 }
-                
+                currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.green);
+
             }
             else
             {
                 Debug.Log("Hiç yıldız alamadım");
+                currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.red);
             }
 
             foreach (Taste taste in currentOrder.customer.Tastes)
@@ -173,9 +181,11 @@ public class GameLogic : MonoBehaviour
                     result.CalculateAverageTasteRating(Satisfaction.CalculateSatisfaction(result.x_max, result.x_zero, result.totalInputCount, result.isLike == true ? 1 : -1));
                 }
             }
-            currentOrder.customer.CalculateAverageSatisfactionValue();
+        currentOrder.customer.CalculateAverageSatisfactionValue();
+        oControl.SetValues(currentOrder.customer,currentOrder.customer.Tastes);
     }
 
+   
 }
 
 

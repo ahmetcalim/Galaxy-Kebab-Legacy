@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class IngredientCreator : MonoBehaviour
 {
@@ -15,8 +16,8 @@ public class IngredientCreator : MonoBehaviour
             ingredientItem.ID = ingredients[i].ID;
             ingredientItem.gLogic = this.gLogic;
             ingredientItem.gameObject.name = ingredients[i].ingredientName;
-            GameObject g=Instantiate(ingredientItem.gameObject,actionViewport);
-            g.name = ingredientItem.name;
+            ingredientItem.GetComponentInChildren<Text>().text = ingredientItem.name;
+            GameObject g=Instantiate(ingredientItem.gameObject,actionViewport);        
             gLogic.ingredients.Add(ingredients[i]);
         }
     }
