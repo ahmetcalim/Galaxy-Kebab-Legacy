@@ -9,6 +9,7 @@ public class OrderItem : MonoBehaviour
     public List<Text> ingredients;
     public Text satisfaction;
     public Text customerName;
+    public Text customerAverage;
 
     public void ClearTexts()
     {
@@ -18,5 +19,11 @@ public class OrderItem : MonoBehaviour
         }
         satisfaction.text = "";
         customerName.text = "";
+        customerAverage.text = "";
     }
+    public void SetColor(Color c)
+    {
+        this.GetComponent<Image>().color = c;
+    }
+
 }
