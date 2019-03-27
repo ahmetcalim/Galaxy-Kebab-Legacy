@@ -9,6 +9,7 @@ TagManager:
   - Slicable
   - Repomatic
   - Lavas
+  - Doner
   layers:
   - Default
   - TransparentFX
