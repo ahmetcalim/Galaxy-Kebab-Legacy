@@ -6,6 +6,7 @@ using UnityEngine;
 public class Session : MonoBehaviour
 {
     public DateTime time;
-    public Customer customer;
-    //public List<>
+    public double dailyPopularity;
+    
 }
+
