@@ -19,12 +19,12 @@ public class GameLogic : MonoBehaviour
     bool isPlay;
     public static int playingTime = 0;
     public static int interval = 20;
-    public GameObject gOver;
     List<Order> orders=new List<Order>();
 
     public void StartGame()
     {
         isPlay = true;
+        Popularity.Instance();
         StartCoroutine(RecursiveCounter());
     }
     public void PauseGame()
@@ -36,7 +36,7 @@ public class GameLogic : MonoBehaviour
         FinishOrder();
         isPlay = false;
         Popularity.SetGlobalPopularity();
-        gOver.SetActive(true);
+        Debug.Log("Oyun Bitti!");
     }
 
 
@@ -161,7 +161,7 @@ public class GameLogic : MonoBehaviour
             }
             Debug.Log("average: "+currentOrder.customer.averageTasteRatingnValue);
             currentOrder.isFinished = true;
-            Popularity.CalculateDailyPopularity(currentOrder.customer.averageTasteRatingnValue*currentOrder.customer.impactFactor);
+            Popularity.CalculateDailyPopularity(currentOrder.customer.averageTasteRatingnValue*currentOrder.customer.personality.impactFactor);
             currentOrder.customer.averageTasteRatingnValue = 0;
         }        
         SetCustomer();
