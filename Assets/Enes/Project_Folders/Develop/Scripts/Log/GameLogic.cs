@@ -25,12 +25,26 @@ public class GameLogic : MonoBehaviour
 
     public void StartGame()
     {
+<<<<<<< HEAD
+        //Pushla
+=======
+<<<<<<< HEAD
+        if (!isPlay)
+        {
+            isPlay = true;
+            Popularity.Instance();
+            StartCoroutine(RecursiveCounter());
+
+        }
+=======
+>>>>>>> da4a13d4d517b7500324306de4c14610dea34581
         isPlay = true;
         popularity = new Popularity();
         popularity.Activate();
         session = new Session();
         session.Activate();
         StartCoroutine(RecursiveCounter());
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
     }
     public void PauseGame()
     {
@@ -110,12 +124,21 @@ public class GameLogic : MonoBehaviour
     int kalan;
     public void FinishOrder()
     {
-        if (!currentOrder.isFinished)
+        if (RepomaticBehaviour.canThrow)
         {
-            foreach (Taste taste in currentOrder.customer.Tastes)
+            if (!currentOrder.isFinished)
             {
-                if (taste.totalInputCount == 0)
+                foreach (Taste taste in currentOrder.customer.Tastes)
                 {
+<<<<<<< HEAD
+                    if (taste.totalInputCount == 0)
+                    {
+                        if (taste.isLike)
+                            taste.tasteRating = -1;
+                        else
+                            taste.tasteRating = 1;
+                    }
+=======
                     switch (taste.preference)
                     {
                         case Taste.Preference.like:
@@ -136,23 +159,59 @@ public class GameLogic : MonoBehaviour
                 {
                     for (int i = 0; i < 10; i++)
                         Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
                 }
-                else
+                currentOrder.customer.CalculateAverageSatisfactionValue();
+                if (currentOrder.customer.averageTasteRatingnValue > 0)
                 {
+<<<<<<< HEAD
+                    if (currentOrder.customer.averageTasteRatingnValue >= 1)
+=======
                     percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];                   
                     kalan = int.Parse(percentage) % 10;
                     if (percentage.Length == 1)
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
                     {
-                        percentage += 0;
+                        for (int i = 0; i < 10; i++)
+                            Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
                     }
+<<<<<<< HEAD
+                    else
+=======
                     for (int i = 0; i < (int.Parse(percentage) - kalan) / 10; i++)
                         Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
 
                     if (kalan != 0)
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
                     {
-                        GameObject star1 = Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
-                        star1.GetComponent<Image>().fillAmount = (float)kalan / 10.0f;
+                        percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];
+                        kalan = int.Parse(percentage) % 10;
+                        Debug.Log("percentage: " + percentage);
+                        Debug.Log("kalan: " + kalan);
+                        if (percentage.Length == 1)
+                        {
+                            percentage += 0;
+                        }
+                        Debug.Log("tam yıldız sayısı" + (int.Parse(percentage) - kalan));
+                        for (int i = 0; i < (int.Parse(percentage) - kalan) / 10; i++)
+                            Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
+
+                        if (kalan != 0)
+                        {
+                            GameObject star1 = Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
+                            star1.GetComponent<Image>().fillAmount = (float)kalan / 10.0f;
+                        }
                     }
+<<<<<<< HEAD
+                    currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.green);
+
+                }
+                else
+                {
+                    Debug.Log("Hiç yıldız alamadım");
+                    currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.red);
+                }
+=======
                 }
                 currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.green);
             }
@@ -161,18 +220,31 @@ public class GameLogic : MonoBehaviour
                 Debug.Log("Hiç yıldız alamadım");
                 currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.red);
             }
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
 
-            foreach (Taste taste in currentOrder.customer.Tastes)
-            {
-                taste.tasteRating = 0;
-                taste.totalInputCount = 0;
+                foreach (Taste taste in currentOrder.customer.Tastes)
+                {
+                    taste.tasteRating = 0;
+                    taste.totalInputCount = 0;
+                }
+                Debug.Log("average: " + currentOrder.customer.averageTasteRatingnValue);
+                currentOrder.isFinished = true;
+                Popularity.CalculateDailyPopularity(currentOrder.customer.averageTasteRatingnValue * currentOrder.customer.personality.impactFactor);
+                currentOrder.customer.averageTasteRatingnValue = 0;
             }
+<<<<<<< HEAD
+        }
+               
+        SetCustomer();
+        
+=======
             currentOrder.isFinished = true;
             popularity.CalculateDailyPopularity(currentOrder.customer.averageTasteRatingnValue*currentOrder.customer.personality.impactFactor);
             Debug.Log("Average: "+ currentOrder.customer.averageTasteRatingnValue);
             currentOrder.customer.averageTasteRatingnValue = 0;
         }        
         SetCustomer();       
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
     }
 
     public void AddIngredient(int ingredientID)
