@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 [System.Serializable]
 public class Customer
@@ -17,7 +16,7 @@ public class Customer
         {
             averageTasteRatingnValue += Tastes[i].tasteRating;
         }
-        averageTasteRatingnValue = averageTasteRatingnValue / Tastes.Where(t => t.preference!=Taste.Preference.irrelevant).ToList().Count;
+        averageTasteRatingnValue = averageTasteRatingnValue / Tastes.Count;
         return averageTasteRatingnValue;
     }
 

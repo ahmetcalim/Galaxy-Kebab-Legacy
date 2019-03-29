@@ -6,60 +6,55 @@ using UnityEngine;
 
 public class Popularity
 {
-    public int userID=1;
-    public double averageDailyPopularity;
-    public double globalPopularity;
-    public int totalDay;
+    static int userID;
+    static double globalPopularity;
+    static List<Session> sessions;
 
-    public void Activate()
+    public static void Instance()
     {
-        if (File.Exists(DailyPopularity.path))
-        {
-            Popularity p = ReadFromJSON(GetJsonPopularity());
-            userID = p.userID;
-            averageDailyPopularity = p.averageDailyPopularity;
-            globalPopularity = p.globalPopularity;
-            totalDay = p.totalDay;
-        }    
+        sessions = new List<Session>();
     }
+    public static void CreateJson()
+    {
 
-    public Popularity ReadFromJSON(string jsonString)
+    }
+    public static Popularity ReadFromJSON(string jsonString)
     {
         return JsonUtility.FromJson<Popularity>(jsonString);
     }
 
-    public void CalculateDailyPopularity(double value)
+    public static void CalculateDailyPopularity(double value)
     {
         DailyPopularity.index++;
         DailyPopularity.dailyPopularity += value;
     }
-
-    public void SetGlobalPopularity()
+    public static void SetGlobalPopularity()
     {
-        totalDay += 1;
         if (!File.Exists(DailyPopularity.path))
         {
             using (StreamWriter sw = File.CreateText(DailyPopularity.path))
             {
-                globalPopularity =DailyPopularity.dailyPopularity / DailyPopularity.index;
-                sw.WriteLine(JsonUtility.ToJson(this));
+                sw.WriteLine(DailyPopularity.dailyPopularity / DailyPopularity.index);
             }
         }
         else
         {
-            globalPopularity =globalPopularity + DailyPopularity.dailyPopularity / DailyPopularity.index;
-            File.WriteAllText(DailyPopularity.path,JsonUtility.ToJson(this));
+            File.WriteAllText(DailyPopularity.path, (GetGlobalPopularity() + DailyPopularity.dailyPopularity / DailyPopularity.index).ToString());
         }
         DailyPopularity.dailyPopularity = 0;
         DailyPopularity.index = 0;
     }
-    public string GetJsonPopularity()
+    public static double GetGlobalPopularity()
     {
         using (StreamReader sr = File.OpenText(DailyPopularity.path))
         {
-            return sr.ReadLine();
+            string s = "";
+            while ((s = sr.ReadLine()) != null)
+            {
+                globalPopularity = float.Parse(s);
+            }
         }
-
+        return globalPopularity;
     }
     public static class DailyPopularity
     {

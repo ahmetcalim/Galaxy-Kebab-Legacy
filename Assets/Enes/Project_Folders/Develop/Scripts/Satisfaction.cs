@@ -30,11 +30,4 @@ public static class Satisfaction
         (GetTasteInputValue(tasteInput,xMax)+0.01f-xZero))))-1)*preference;
     }
 
-    public static double CalculateIrrelevantSatisfaction(double tasteInput)
-    {
-        Debug.Log(tasteInput);
-        return -Math.Pow(tasteInput/141,2);
-    }
-
-
 }

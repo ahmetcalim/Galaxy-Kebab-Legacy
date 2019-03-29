@@ -10,13 +10,7 @@ public class Taste
     public double x_max;
     public double tasteRating;
     public double totalInputCount;
-    public Preference preference;
-    public enum Preference
-    {
-        irrelevant,
-        like,
-        dislike
-    };
+    public bool isLike = true;
     public enum Tastes 
     { 
     Astringent,
