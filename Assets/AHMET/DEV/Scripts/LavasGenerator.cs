@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR.InteractionSystem;
-
+using UnityEngine.SceneManagement;
 public class LavasGenerator : MonoBehaviour
 {
     public GameObject lavasPrefab;
@@ -15,6 +15,7 @@ public class LavasGenerator : MonoBehaviour
     public CircularDrive circularDrive;
     public void GenerateLavas()
     {
+        
         if (generatedLavasCount == 0)
         {
             generatedLavasCount++;
@@ -30,12 +31,15 @@ public class LavasGenerator : MonoBehaviour
     }
     IEnumerator Move()
     {
-        yield return new WaitForSeconds(.01f);
-        
-        currentLavas.transform.position = Vector3.MoveTowards(currentLavas.transform.position, arrivePoint.position, 0.001f);
-        if (currentLavas.transform.position != arrivePoint.position)
+        yield return new WaitForSeconds(.02f);
+
+        if (currentLavas != null)
         {
-            StartCoroutine(Move());
+            currentLavas.transform.position = Vector3.MoveTowards(currentLavas.transform.position, arrivePoint.position, 0.01f);
+            if (currentLavas.transform.position != arrivePoint.position)
+            {
+                StartCoroutine(Move());
+            }
         }
      
     }
