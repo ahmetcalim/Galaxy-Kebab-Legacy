@@ -27,6 +27,7 @@ public class GameLogic : MonoBehaviour
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (!isPlay)
         {
             isPlay = true;
@@ -42,6 +43,11 @@ public class GameLogic : MonoBehaviour
         session.Activate();
         StartCoroutine(RecursiveCounter());
 >>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
+=======
+        isPlay = true;
+        Popularity.Instance();
+        StartCoroutine(RecursiveCounter());
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
 =======
         isPlay = true;
         Popularity.Instance();
@@ -134,6 +140,7 @@ public class GameLogic : MonoBehaviour
                 {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     if (taste.totalInputCount == 0)
                     {
                         if (taste.isLike)
@@ -153,12 +160,19 @@ public class GameLogic : MonoBehaviour
                         default:
                             break;
                     }   
+=======
+                    if (taste.isLike)
+                        taste.tasteRating = -1;
+                    else
+                        taste.tasteRating = 1;
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
                 }
             }
             currentOrder.customer.CalculateAverageSatisfactionValue();
             if (currentOrder.customer.averageTasteRatingnValue > 0)
             {
                 if (currentOrder.customer.averageTasteRatingnValue>=1)
+<<<<<<< HEAD
                 {
                     for (int i = 0; i < 10; i++)
                         Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
@@ -190,11 +204,20 @@ public class GameLogic : MonoBehaviour
                     if (percentage.Length == 1)
 >>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
 =======
+=======
+                {
+                    for (int i = 0; i < 10; i++)
+                        Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
+                }
+                else
+                {
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
                     percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];                   
                     kalan = int.Parse(percentage) % 10;
                     Debug.Log("percentage: " + percentage);
                     Debug.Log("kalan: "+kalan);
                     if (percentage.Length == 1)
+<<<<<<< HEAD
 >>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
                     {
                         percentage += 0;
@@ -206,18 +229,28 @@ public class GameLogic : MonoBehaviour
 =======
                     Debug.Log("tam yıldız sayısı"+ (int.Parse(percentage) - kalan));
 >>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
+=======
+                    {
+                        percentage += 0;
+                    }
+                    Debug.Log("tam yıldız sayısı"+ (int.Parse(percentage) - kalan));
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
                     for (int i = 0; i < (int.Parse(percentage) - kalan) / 10; i++)
                         Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
 
                     if (kalan != 0)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
+=======
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
 =======
 >>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
                     {
                         GameObject star1 = Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
                         star1.GetComponent<Image>().fillAmount = (float)kalan / 10.0f;
                     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
                     currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.green);
@@ -249,6 +282,12 @@ public class GameLogic : MonoBehaviour
         }
                
 =======
+=======
+                }
+                currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.green);
+
+            }
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
             else
             {
                 Debug.Log("Hiç yıldız alamadım");
@@ -265,6 +304,9 @@ public class GameLogic : MonoBehaviour
             Popularity.CalculateDailyPopularity(currentOrder.customer.averageTasteRatingnValue*currentOrder.customer.personality.impactFactor);
             currentOrder.customer.averageTasteRatingnValue = 0;
         }        
+<<<<<<< HEAD
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
+=======
 >>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
         SetCustomer();
         
