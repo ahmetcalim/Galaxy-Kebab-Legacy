@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-﻿
-=======
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -189,6 +186,3 @@ public class GameLogic : MonoBehaviour
    
 }
 
-
-
->>>>>>> parent of 5af479a... Relevant _preference yapısı değişti.
