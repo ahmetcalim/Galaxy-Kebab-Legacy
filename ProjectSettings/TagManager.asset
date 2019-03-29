@@ -10,7 +10,6 @@ TagManager:
   - Repomatic
   - Lavas
   - Doner
-  - DonerPiece
   layers:
   - Default
   - TransparentFX

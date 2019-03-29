@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6689831328648016744}
   - component: {fileID: 6689831328648016745}
   - component: {fileID: 6689831328648016742}
-  - component: {fileID: 2856318023376684511}
   m_Layer: 0
   m_Name: Lavas
   m_TagString: Lavas
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 6689831328648016743}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.765, y: 1.0657, z: 1.5025}
-  m_LocalScale: {x: 2, y: -0.003594087, z: 2}
+  m_LocalScale: {x: 0.18750952, y: -0.003594087, z: 0.18119508}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -109,15 +108,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2856318023376684511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6689831328648016743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 913b7e55a8a6ca047add5a44b7fe0b9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

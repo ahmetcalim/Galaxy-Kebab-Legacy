@@ -26,6 +26,7 @@ public class GameLogic : MonoBehaviour
     public void StartGame()
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (!isPlay)
         {
             isPlay = true;
@@ -41,6 +42,11 @@ public class GameLogic : MonoBehaviour
         session.Activate();
         StartCoroutine(RecursiveCounter());
 >>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
+=======
+        isPlay = true;
+        Popularity.Instance();
+        StartCoroutine(RecursiveCounter());
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
     }
     public void PauseGame()
     {
@@ -120,12 +126,13 @@ public class GameLogic : MonoBehaviour
     int kalan;
     public void FinishOrder()
     {
-        if (RepomaticBehaviour.canThrow)
+        if (!currentOrder.isFinished)
         {
-            if (!currentOrder.isFinished)
+            foreach (Taste taste in currentOrder.customer.Tastes)
             {
-                foreach (Taste taste in currentOrder.customer.Tastes)
+                if (taste.totalInputCount == 0)
                 {
+<<<<<<< HEAD
 <<<<<<< HEAD
                     if (taste.totalInputCount == 0)
                     {
@@ -156,10 +163,25 @@ public class GameLogic : MonoBehaviour
                     for (int i = 0; i < 10; i++)
                         Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
 >>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
+=======
+                    if (taste.isLike)
+                        taste.tasteRating = -1;
+                    else
+                        taste.tasteRating = 1;
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
                 }
-                currentOrder.customer.CalculateAverageSatisfactionValue();
-                if (currentOrder.customer.averageTasteRatingnValue > 0)
+            }
+            currentOrder.customer.CalculateAverageSatisfactionValue();
+            if (currentOrder.customer.averageTasteRatingnValue > 0)
+            {
+                if (currentOrder.customer.averageTasteRatingnValue>=1)
                 {
+                    for (int i = 0; i < 10; i++)
+                        Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
+                }
+                else
+                {
+<<<<<<< HEAD
 <<<<<<< HEAD
                     if (currentOrder.customer.averageTasteRatingnValue >= 1)
 =======
@@ -167,37 +189,36 @@ public class GameLogic : MonoBehaviour
                     kalan = int.Parse(percentage) % 10;
                     if (percentage.Length == 1)
 >>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
+=======
+                    percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];                   
+                    kalan = int.Parse(percentage) % 10;
+                    Debug.Log("percentage: " + percentage);
+                    Debug.Log("kalan: "+kalan);
+                    if (percentage.Length == 1)
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
                     {
-                        for (int i = 0; i < 10; i++)
-                            Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
+                        percentage += 0;
                     }
+<<<<<<< HEAD
 <<<<<<< HEAD
                     else
 =======
+=======
+                    Debug.Log("tam yıldız sayısı"+ (int.Parse(percentage) - kalan));
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
                     for (int i = 0; i < (int.Parse(percentage) - kalan) / 10; i++)
                         Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
 
                     if (kalan != 0)
+<<<<<<< HEAD
 >>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
+=======
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
                     {
-                        percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];
-                        kalan = int.Parse(percentage) % 10;
-                        Debug.Log("percentage: " + percentage);
-                        Debug.Log("kalan: " + kalan);
-                        if (percentage.Length == 1)
-                        {
-                            percentage += 0;
-                        }
-                        Debug.Log("tam yıldız sayısı" + (int.Parse(percentage) - kalan));
-                        for (int i = 0; i < (int.Parse(percentage) - kalan) / 10; i++)
-                            Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
-
-                        if (kalan != 0)
-                        {
-                            GameObject star1 = Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
-                            star1.GetComponent<Image>().fillAmount = (float)kalan / 10.0f;
-                        }
+                        GameObject star1 = Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
+                        star1.GetComponent<Image>().fillAmount = (float)kalan / 10.0f;
                     }
+<<<<<<< HEAD
 <<<<<<< HEAD
                     currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.green);
 
@@ -217,20 +238,34 @@ public class GameLogic : MonoBehaviour
                 currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.red);
             }
 >>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
-
-                foreach (Taste taste in currentOrder.customer.Tastes)
-                {
-                    taste.tasteRating = 0;
-                    taste.totalInputCount = 0;
+=======
                 }
-                Debug.Log("average: " + currentOrder.customer.averageTasteRatingnValue);
-                currentOrder.isFinished = true;
-                Popularity.CalculateDailyPopularity(currentOrder.customer.averageTasteRatingnValue * currentOrder.customer.personality.impactFactor);
-                currentOrder.customer.averageTasteRatingnValue = 0;
+                currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.green);
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
+
             }
+<<<<<<< HEAD
 <<<<<<< HEAD
         }
                
+=======
+            else
+            {
+                Debug.Log("Hiç yıldız alamadım");
+                currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.red);
+            }
+
+            foreach (Taste taste in currentOrder.customer.Tastes)
+            {
+                taste.tasteRating = 0;
+                taste.totalInputCount = 0;
+            }
+            Debug.Log("average: "+currentOrder.customer.averageTasteRatingnValue);
+            currentOrder.isFinished = true;
+            Popularity.CalculateDailyPopularity(currentOrder.customer.averageTasteRatingnValue*currentOrder.customer.personality.impactFactor);
+            currentOrder.customer.averageTasteRatingnValue = 0;
+        }        
+>>>>>>> parent of bc28dc8... Doner Kesme/Doner Ekleme/VRLog
         SetCustomer();
         
 =======
