@@ -5,12 +5,12 @@ using UnityEngine;
 public class CustomerCreator : MonoBehaviour
 {
     public List<Customer> customers;
-    public GameLogic gLogic;
+    //public GameLogic gLogic;
     public void CreateCustomer()
     {
         foreach (Customer customer in customers)
         {
-            gLogic.customers.Add(customer);
+            //gLogic.customers.Add(customer);
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class IngredientCreator : MonoBehaviour
 {
     public List<Ingredient> ingredients;
-    public GameLogic gLogic;
+   // public GameLogic gLogic;
     public IngredientItem ingredientItem;
     public Transform actionViewport;
     public void CreateIngredient()
@@ -14,11 +14,11 @@ public class IngredientCreator : MonoBehaviour
         for (int i = 0; i < ingredients.Count; i++)
         {
             ingredientItem.ID = ingredients[i].ID;
-            ingredientItem.gLogic = this.gLogic;
+            //ingredientItem.gLogic = this.gLogic;
             ingredientItem.gameObject.name = ingredients[i].ingredientName;
             ingredientItem.GetComponentInChildren<Text>().text = ingredientItem.name;
             GameObject g=Instantiate(ingredientItem.gameObject,actionViewport);        
-            gLogic.ingredients.Add(ingredients[i]);
+           // gLogic.ingredients.Add(ingredients[i]);
         }
     }
 
