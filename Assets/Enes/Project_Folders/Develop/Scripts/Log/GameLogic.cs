@@ -11,18 +11,21 @@ public class GameLogic : MonoBehaviour
     public List<Ingredient> ingredients;
     public Transform viewport;
     public OrderItem oItem;
-    public OrderControl oControl;
-    Order currentOrder;
-    GameObject currentOrderPrefab;
-    public GameObject star;
-    Taste result;
+    public OrderControl oControl;  
+    public GameObject star;   
     bool isPlay;
-    public static int playingTime = 0;
-    public static int interval = 20;
+    int playingTime = 0;
+    public int interval = 30;
+    GameObject currentOrderPrefab;
     List<Order> orders=new List<Order>();
+    Taste result;
+    Order currentOrder;
+    Popularity popularity;
+    Session session;
 
     public void StartGame()
     {
+<<<<<<< HEAD
         if (!isPlay)
         {
             isPlay = true;
@@ -30,6 +33,14 @@ public class GameLogic : MonoBehaviour
             StartCoroutine(RecursiveCounter());
 
         }
+=======
+        isPlay = true;
+        popularity = new Popularity();
+        popularity.Activate();
+        session = new Session();
+        session.Activate();
+        StartCoroutine(RecursiveCounter());
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
     }
     public void PauseGame()
     {
@@ -39,8 +50,8 @@ public class GameLogic : MonoBehaviour
     {
         FinishOrder();
         isPlay = false;
-        Popularity.SetGlobalPopularity();
-        Debug.Log("Oyun Bitti!");
+        popularity.SetGlobalPopularity();
+        Debug.Log("Oyun Bitti!");       
     }
 
 
@@ -115,6 +126,7 @@ public class GameLogic : MonoBehaviour
             {
                 foreach (Taste taste in currentOrder.customer.Tastes)
                 {
+<<<<<<< HEAD
                     if (taste.totalInputCount == 0)
                     {
                         if (taste.isLike)
@@ -122,16 +134,51 @@ public class GameLogic : MonoBehaviour
                         else
                             taste.tasteRating = 1;
                     }
+=======
+                    switch (taste.preference)
+                    {
+                        case Taste.Preference.like:
+                            taste.tasteRating = -1;
+                            break;
+                        case Taste.Preference.dislike:
+                            taste.tasteRating = 1;
+                            break;
+                        default:
+                            break;
+                    }   
+                }
+            }
+            currentOrder.customer.CalculateAverageSatisfactionValue();
+            if (currentOrder.customer.averageTasteRatingnValue > 0)
+            {
+                if (currentOrder.customer.averageTasteRatingnValue>=1)
+                {
+                    for (int i = 0; i < 10; i++)
+                        Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
                 }
                 currentOrder.customer.CalculateAverageSatisfactionValue();
                 if (currentOrder.customer.averageTasteRatingnValue > 0)
                 {
+<<<<<<< HEAD
                     if (currentOrder.customer.averageTasteRatingnValue >= 1)
+=======
+                    percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];                   
+                    kalan = int.Parse(percentage) % 10;
+                    if (percentage.Length == 1)
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
                     {
                         for (int i = 0; i < 10; i++)
                             Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
                     }
+<<<<<<< HEAD
                     else
+=======
+                    for (int i = 0; i < (int.Parse(percentage) - kalan) / 10; i++)
+                        Instantiate(star, currentOrderPrefab.GetComponent<OrderItem>().satisfaction.transform);
+
+                    if (kalan != 0)
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
                     {
                         percentage = currentOrder.customer.averageTasteRatingnValue.ToString("0.##").Split(',')[1];
                         kalan = int.Parse(percentage) % 10;
@@ -151,6 +198,7 @@ public class GameLogic : MonoBehaviour
                             star1.GetComponent<Image>().fillAmount = (float)kalan / 10.0f;
                         }
                     }
+<<<<<<< HEAD
                     currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.green);
 
                 }
@@ -159,6 +207,16 @@ public class GameLogic : MonoBehaviour
                     Debug.Log("Hiç yıldız alamadım");
                     currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.red);
                 }
+=======
+                }
+                currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.green);
+            }
+            else
+            {
+                Debug.Log("Hiç yıldız alamadım");
+                currentOrderPrefab.GetComponent<OrderItem>().SetColor(Color.red);
+            }
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
 
                 foreach (Taste taste in currentOrder.customer.Tastes)
                 {
@@ -170,28 +228,51 @@ public class GameLogic : MonoBehaviour
                 Popularity.CalculateDailyPopularity(currentOrder.customer.averageTasteRatingnValue * currentOrder.customer.personality.impactFactor);
                 currentOrder.customer.averageTasteRatingnValue = 0;
             }
+<<<<<<< HEAD
         }
                
         SetCustomer();
         
+=======
+            currentOrder.isFinished = true;
+            popularity.CalculateDailyPopularity(currentOrder.customer.averageTasteRatingnValue*currentOrder.customer.personality.impactFactor);
+            Debug.Log("Average: "+ currentOrder.customer.averageTasteRatingnValue);
+            currentOrder.customer.averageTasteRatingnValue = 0;
+        }        
+        SetCustomer();       
+>>>>>>> 5af479a50efa19290de2921ec97be642c2532e5d
     }
 
     public void AddIngredient(int ingredientID)
     {
-            for (int i = 0; i < ingredients[ingredientID].tastes.Count; i++)
+        for (int i = 0; i < ingredients[ingredientID].tastes.Count; i++)
+        {
+            result = currentOrder.customer.Tastes.Where(t => t.taste == ingredients[ingredientID].tastes[i].taste).ToList().FirstOrDefault();
+
+            switch (result.preference)
             {
-                result = currentOrder.customer.Tastes.Where(t => t.taste == ingredients[ingredientID].tastes[i].taste).ToList().FirstOrDefault();
-                if (result != null)
-                {
+                case Taste.Preference.irrelevant:
                     result.totalInputCount += ingredients[ingredientID].tastes[i].tasteInput;
-                    result.CalculateAverageTasteRating(Satisfaction.CalculateSatisfaction(result.x_max, result.x_zero, result.totalInputCount, result.isLike == true ? 1 : -1));
-                }
+                    if (result.totalInputCount>70&&result.totalInputCount<=100)
+                        result.CalculateAverageTasteRating(Satisfaction.CalculateIrrelevantSatisfaction(result.totalInputCount));
+                    break;
+                case Taste.Preference.like:
+                    result.totalInputCount += ingredients[ingredientID].tastes[i].tasteInput;
+                    result.CalculateAverageTasteRating(Satisfaction.CalculateSatisfaction(result.x_max, result.x_zero, result.totalInputCount, 1));
+                    break;
+                case Taste.Preference.dislike:
+                    result.totalInputCount += ingredients[ingredientID].tastes[i].tasteInput;
+                    result.CalculateAverageTasteRating(Satisfaction.CalculateSatisfaction(result.x_max, result.x_zero, result.totalInputCount, -1));
+                    break;
+                default:
+                    break;
             }
+        }
         currentOrder.customer.CalculateAverageSatisfactionValue();
-        oControl.SetValues(currentOrder.customer,currentOrder.customer.Tastes);
+        oControl.SetValues(currentOrder.customer, currentOrder.customer.Tastes);
     }
 
-   
+
 }
 
 
