@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class IngredientItem : MonoBehaviour
 {
     public int ID;
-    //public GameLogic gLogic;
+    public GameLogic gLogic;
 
     private void OnEnable()
     {
@@ -15,6 +15,6 @@ public class IngredientItem : MonoBehaviour
 
     public void Action()
     {
-        //gLogic.AddIngredient(this.ID);
+        gLogic.AddIngredient(this.ID);
     }
 }
